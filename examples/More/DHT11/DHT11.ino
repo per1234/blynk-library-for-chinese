@@ -1,52 +1,21 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
-
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
-
-  This example shows how value can be pushed from Arduino to
-  the Blynk App.
-
-  WARNING :
-  For this example you'll need Adafruit DHT sensor libraries:
+项目说明：控制舵机
+ App项目设置:
+创建Value Display组件，输入管脚设置为V5,数值范围0-180
+创建Value Display组件，输入管脚设置为V6,数值范围0-180
+  温馨提醒 :
+为了正常使用，你还需要下载下面两个第三方库:
     https://github.com/adafruit/Adafruit_Sensor
     https://github.com/adafruit/DHT-sensor-library
-
-  App project setup:
-    Value Display widget attached to V5
-    Value Display widget attached to V6
  *************************************************************/
-
-/* Comment this out to disable prints and save space */
-#define BLYNK_PRINT Serial
-
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
+#define BLYNK_PRINT Serial // 开启串口监视
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
 #include <DHT.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
-#define DHTPIN 2          // What digital pin we're connected to
-
-// Uncomment whatever type you're using!
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
+#define DHTPIN 2//传感器连接管脚
 #define DHTTYPE DHT11     // DHT 11
 //#define DHTTYPE DHT22   // DHT 22, AM2302, AM2321
 //#define DHTTYPE DHT21   // DHT 21, AM2301
@@ -60,28 +29,23 @@ BlynkTimer timer;
 void sendSensor()
 {
   float h = dht.readHumidity();
-  float t = dht.readTemperature(); // or dht.readTemperature(true) for Fahrenheit
-
+  float t = dht.readTemperature(); //摄氏度
+//float t = dht.readTemperature(true); //华氏度
   if (isnan(h) || isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
     return;
   }
-  // You can send any value at any time.
-  // Please don't send more that 10 values per second.
-  Blynk.virtualWrite(V5, h);
-  Blynk.virtualWrite(V6, t);
+  Blynk.virtualWrite(V5, h);//将湿度发送给V5
+  Blynk.virtualWrite(V6, t);//将湿度发送给V6
 }
 
 void setup()
 {
-  // Debug console
-  Serial.begin(9600);
-
-  Blynk.begin(auth);
-
+    Serial.begin(9600);
+   // Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
   dht.begin();
-
-  // Setup a function to be called every second
   timer.setInterval(1000L, sendSensor);
 }
 

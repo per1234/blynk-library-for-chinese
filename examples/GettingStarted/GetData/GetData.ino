@@ -1,48 +1,19 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
-
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
-
-  You can use this sketch as a debug tool that prints all incoming values
-  sent by a widget connected to a Virtual Pin 1 in the Blynk App.
-
-  App project setup:
-    Slider widget (0...100) on V1
+项目说明：从app获取数据
+ App项目设置:
+创建Slider组件，输出管脚设置为V1
  *************************************************************/
+#define BLYNK_PRINT Serial // 开启串口监视
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
 
-/* Comment this out to disable prints and save space */
-#define BLYNK_PRINT Serial
-
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
-// This function will be called every time Slider Widget
-// in Blynk app writes values to the Virtual Pin 1
 BLYNK_WRITE(V1)
 {
-  int pinValue = param.asInt(); // assigning incoming value from pin V1 to a variable
-  // You can also use:
+  int pinValue = param.asInt(); // 从虚拟管脚V1获取整数
+  // 或者用以下方式
   // String i = param.asStr();
   // double d = param.asDouble();
   Serial.print("V1 Slider value is: ");
@@ -51,10 +22,10 @@ BLYNK_WRITE(V1)
 
 void setup()
 {
-  // Debug console
-  Serial.begin(9600);
-
-  Blynk.begin(auth);
+   Serial.begin(9600);
+   // Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
 }
 
 void loop()

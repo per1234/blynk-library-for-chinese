@@ -1,47 +1,29 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
+项目说明：发送邮件
+App项目设置:创建eventor组件
+硬件设置：
+注意事项：
 
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
+*************************************************************/
 
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
+/*************************************************************
 
   You can use predefined rules on application side.
-
   Project setup in the Blynk app:
-    Eventor widget with next rules :
+    Eventor widget with next rules:
       a) When V0 is equal to 1, set V1 to 255;
       b) When V0 is equal to 0, set V1 to 0;
     Led widget on V1 pin
  *************************************************************/
-
-/* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
-
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
 
 BlynkTimer timer;
 boolean flag = true;
-
 void sendFlagToServer() {
   if (flag) {
     Blynk.virtualWrite(V0, 1);
@@ -58,13 +40,11 @@ BLYNK_WRITE(V1) {
 
 void setup()
 {
-  // Debug console
   Serial.begin(9600);
-
-  Blynk.begin(auth);
-
-  // Setup a function to be called every second
-  timer.setInterval(1000L, sendFlagToServer);
+// Blynk.begin(auth, ssid, pass);//官方服务器
+//Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
+  timer.setInterval(1000L, sendFlagToServer);//每秒执行一次
 }
 
 void loop()

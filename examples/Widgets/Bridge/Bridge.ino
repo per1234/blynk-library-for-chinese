@@ -1,90 +1,63 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
+项目说明：通过bridge可以控制外的设备
 
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
+控制端为A，被控制端为B。将B的授权码告知A，A就可以通过以下方式控制B
 
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
-
-  Control another device using Bridge widget!
-
-  Bridge is initialized with the token of any (Blynk-enabled) device.
-  After that, use the familiar functions to control it:
     bridge.digitalWrite(8, HIGH)
-    bridge.digitalWrite("A0", LOW) // <- target needs to support "Named pins"
+    bridge.digitalWrite("A0", LOW) // <- 被控制端要支持 名称管脚
     bridge.analogWrite(3, 123)
     bridge.virtualWrite(V1, "hello")
+
+     控制端App项目设置:
+     创建bridge组件，设置管脚为V1
  *************************************************************/
+#define BLYNK_PRINT Serial // 开启串口监视
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
 
-/* Comment this out to disable prints and save space */
-#define BLYNK_PRINT Serial
+WidgetBridge bridge1(V1);//在虚拟管脚V1创建bridge
 
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
-// Bridge widget on virtual pin 1
-WidgetBridge bridge1(V1);
-
-// Timer for blynking
 BlynkTimer timer;
 
 static bool value = true;
-void blynkAnotherDevice() // Here we will send HIGH or LOW once per second
+void blynkAnotherDevice() 
 {
-  // Send value to another device
+  //向被控制端发送数据
   if (value) {
-    bridge1.digitalWrite(9, HIGH);  // Digital Pin 9 on the second board will be set HIGH
-    bridge1.virtualWrite(V5, 1); // Sends 1 value to BLYNK_WRITE(V5) handler on receiving side.
+    bridge1.digitalWrite(12, HIGH);  //被控制端的12号管脚将被设为 HIGH 
+    bridge1.virtualWrite(V5, 1); // 向被控制端V5管脚发送1，被控制端需要用BLYNK_WRITE(V5) 接收
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    // Keep in mind that when performing virtualWrite with Bridge,
-    // second board will need to process the incoming command.
-    // It can be done by using this handler on the second board:
+    //特别注意，如果向被控制端的虚拟管脚发送数据，
+    //被控制端需要用 BLYNK_WRITE函数来接收，类似于接收来自app端的虚拟管脚数据
     //
     //    BLYNK_WRITE(V5){
-    //    int pinData = param.asInt(); // pinData variable will store value that came via Bridge
+    //    int pinData = param.asInt(); // 接收来自bridge的数据
     //    }
     //
     /////////////////////////////////////////////////////////////////////////////////////////
   } else {
-    bridge1.digitalWrite(9, LOW); // Digital Pin 9 on the second board will be set LOW
-    bridge1.virtualWrite(V5, 0); // Sends 0 value to BLYNK_WRITE(V5) handler on receiving side.
+    bridge1.digitalWrite(12, LOW); //被控制端的12号管脚将被设为 LOW
+    bridge1.virtualWrite(V5, 0); // 向被控制端V5管脚发送0，被控制端需要用BLYNK_WRITE(V5) 接收
   }
-  // Toggle value
+  // value取反
   value = !value;
 }
 
 BLYNK_CONNECTED() {
-  bridge1.setAuthToken("OtherAuthToken"); // Place the AuthToken of the second hardware here
+  bridge1.setAuthToken("OtherAuthToken"); //被控制端的授权码
 }
 
 void setup()
 {
-  // Debug console
   Serial.begin(9600);
-
-  Blynk.begin(auth);
-
-  // Call blynkAnotherDevice every second
-  timer.setInterval(1000L, blynkAnotherDevice);
+   // Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
+  timer.setInterval(1000L, blynkAnotherDevice);  // 每秒钟调用 blynkAnotherDevice 函数
 }
 
 void loop()
