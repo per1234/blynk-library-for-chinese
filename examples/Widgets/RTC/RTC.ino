@@ -1,97 +1,63 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
+  项目说明：RTC
+  App项目设置:创建RTC组件，
+  创建Value Display组件，管脚设为V1,
+创建Value Display组件，管脚设为V2,
+温馨提示：
+本项目需要额外库
+ https://github.com/PaulStoffregen/Time
+ 本项目基于
+ https://github.com/PaulStoffregen/Time/blob/master/examples/TimeSerial/TimeSerial.ino
 
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
-
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
-
-  Blynk can provide your device with time data, like an RTC.
-  Please note that the accuracy of this method is up to several seconds.
-
-  App project setup:
-    RTC widget (no pin required)
-    Value Display widget on V1
-    Value Display widget on V2
-
-  WARNING :
-  For this example you'll need Time keeping library:
-    https://github.com/PaulStoffregen/Time
-
-  This code is based on an example from the Time library:
-    https://github.com/PaulStoffregen/Time/blob/master/examples/TimeSerial/TimeSerial.ino
  *************************************************************/
+ #define BLYNK_PRINT Serial
 
-/* Comment this out to disable prints and save space */
-#define BLYNK_PRINT Serial
+ #include <ESP8266WiFi.h>
+ #include <BlynkSimpleEsp8266.h>
+ #include <TimeLib.h>
+ #include <WidgetRTC.h>
 
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
-#include <TimeLib.h>
-#include <WidgetRTC.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
 BlynkTimer timer;
 
-WidgetRTC rtc;
+WidgetRTC rtc;//创建rtc组件
 
-// Digital clock display of the time
-void clockDisplay()
+void clockDisplay()//显示时间
 {
-  // You can call hour(), minute(), ... at any time
-  // Please see Time library examples for details
-
-  String currentTime = String(hour()) + ":" + minute() + ":" + second();
-  String currentDate = String(day()) + " " + month() + " " + year();
-  Serial.print("Current time: ");
-  Serial.print(currentTime);
-  Serial.print(" ");
-  Serial.print(currentDate);
-  Serial.println();
-
-  // Send time to the App
-  Blynk.virtualWrite(V1, currentTime);
-  // Send date to the App
-  Blynk.virtualWrite(V2, currentDate);
+ //你可以使用hour(), minute(), ...
+//更多细节，请参考Time库 中的例子
+String currentTime = String(hour()) + ":" + minute() + ":" + second();
+String currentDate = String(day()) + " " + month() + " " + year();
+Serial.print("Current time: ");
+Serial.print(currentTime);
+Serial.print(" ");
+Serial.print(currentDate);
+Serial.println();
+  Blynk.virtualWrite(V1, currentTime);//向App发送时间
+  Blynk.virtualWrite(V2, currentDate);//向App发送日期
 }
 
 BLYNK_CONNECTED() {
-  // Synchronize time on connection
-  rtc.begin();
+  rtc.begin();//连上后同步时间
 }
 
 void setup()
 {
-  // Debug console
+  
   Serial.begin(9600);
 
-  Blynk.begin(auth);
+  //Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
 
-  // Other Time library functions can be used, like:
+  // 也可以使用其他Time 库中的函数，比如：
   //   timeStatus(), setSyncInterval(interval)...
-  // Read more: http://www.pjrc.com/teensy/td_libs_Time.html
+  // 更多资料，请参考: http://www.pjrc.com/teensy/td_libs_Time.html
 
-  setSyncInterval(10 * 60); // Sync interval in seconds (10 minutes)
-
-  // Display digital clock every 10 seconds
-  timer.setInterval(10000L, clockDisplay);
+  setSyncInterval(10 * 60); // 设置同步间隔时间，10分钟。
+  timer.setInterval(10000L, clockDisplay);//每隔10s，运行clockDisplay，显示时间
 }
 
 void loop()

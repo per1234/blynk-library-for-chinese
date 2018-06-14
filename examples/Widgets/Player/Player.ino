@@ -1,11 +1,11 @@
 /*************************************************************
-  项目说明：播放器
+  项目说明：音乐播放器
   App项目设置:创建player组件，设置管脚为V5
- *************************************************************/
-#define BLYNK_PRINT Serial
+  *************************************************************/
+  #define BLYNK_PRINT Serial
 
-#include <ESP8266WiFi.h>
-#include <BlynkSimpleEsp8266.h>
+  #include <ESP8266WiFi.h>
+  #include <BlynkSimpleEsp8266.h>
 char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
 char ssid[] = "ssid";//wifi名称
 char pass[] = "psssword";//wifi密码
