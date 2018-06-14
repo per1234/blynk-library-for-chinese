@@ -1,7 +1,7 @@
 /*************************************************************
-项目说明：摇杆
-App项目设置:
-创建joystick组件，设置管脚为V1,模式为merge，在merge模式下，x和y会被放在1条消息中合并发送
+  项目说明：摇杆
+  App项目设置:
+  创建joystick组件，设置管脚为V1,模式为merge，在merge模式下，x和y会被放在1条消息中合并发送
  *************************************************************/
 #define BLYNK_PRINT Serial
 
@@ -22,7 +22,7 @@ BLYNK_WRITE(V1) {
 
 void setup()
 {
- Serial.begin(9600);
+  Serial.begin(9600);
   // Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
   Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式

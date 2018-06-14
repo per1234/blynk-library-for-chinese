@@ -1,7 +1,7 @@
 /*************************************************************
-项目说明：从app获取数据
- App项目设置:
-创建Slider组件，输出管脚设置为V1
+  项目说明：从app获取数据
+  App项目设置:
+  创建Slider组件，输出管脚设置为V1
  *************************************************************/
 #define BLYNK_PRINT Serial // 开启串口监视
 #include <ESP8266WiFi.h>
@@ -22,8 +22,8 @@ BLYNK_WRITE(V1)
 
 void setup()
 {
-   Serial.begin(9600);
-   // Blynk.begin(auth, ssid, pass);//官方服务器
+  Serial.begin(9600);
+  // Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
   Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
 }

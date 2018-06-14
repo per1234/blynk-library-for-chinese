@@ -1,6 +1,6 @@
 /*************************************************************
-项目说明：发送数据App
- App项目设置:
+  项目说明：发送数据
+  App项目设置:
 
  *************************************************************/
 #define BLYNK_PRINT Serial // 开启串口监视
@@ -21,8 +21,8 @@ BLYNK_READ(PIN_UPTIME)
 
 void setup()
 {
-   Serial.begin(9600);
-   // Blynk.begin(auth, ssid, pass);//官方服务器
+  Serial.begin(9600);
+  // Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
   Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
   timer.setInterval(1000L, myTimerEvent);

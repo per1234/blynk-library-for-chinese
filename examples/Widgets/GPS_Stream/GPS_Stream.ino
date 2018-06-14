@@ -1,9 +1,9 @@
 
 /*************************************************************
-项目说明：GPS
-App项目设置:创建 GPS 组件，设置管脚为V1
-硬件设置：
-注意事项：需要google play服务支持
+  项目说明：GPS
+  App项目设置:创建 GPS 组件，设置管脚为V1
+  硬件设置：
+  注意事项：需要google play服务支持
 
 *************************************************************/
 
@@ -37,8 +37,8 @@ BLYNK_WRITE(V1) {
 void setup()
 {
   Serial.begin(9600);
-// Blynk.begin(auth, ssid, pass);//官方服务器
-//Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  // Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
   Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
 }
 

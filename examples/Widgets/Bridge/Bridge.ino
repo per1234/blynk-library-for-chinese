@@ -1,7 +1,7 @@
 /*************************************************************
-项目说明：通过bridge可以控制外的设备
+  项目说明：通过bridge可以控制外的设备
 
-控制端为A，被控制端为B。将B的授权码告知A，A就可以通过以下方式控制B
+  控制端为A，被控制端为B。将B的授权码告知A，A就可以通过以下方式控制B
 
     bridge.digitalWrite(8, HIGH)
     bridge.digitalWrite("A0", LOW) // <- 被控制端要支持 名称管脚
@@ -23,11 +23,11 @@ WidgetBridge bridge1(V1);//在虚拟管脚V1创建bridge
 BlynkTimer timer;
 
 static bool value = true;
-void blynkAnotherDevice() 
+void blynkAnotherDevice()
 {
   //向被控制端发送数据
   if (value) {
-    bridge1.digitalWrite(12, HIGH);  //被控制端的12号管脚将被设为 HIGH 
+    bridge1.digitalWrite(12, HIGH);  //被控制端的12号管脚将被设为 HIGH
     bridge1.virtualWrite(V5, 1); // 向被控制端V5管脚发送1，被控制端需要用BLYNK_WRITE(V5) 接收
 
     /////////////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ BLYNK_CONNECTED() {
 void setup()
 {
   Serial.begin(9600);
-   // Blynk.begin(auth, ssid, pass);//官方服务器
+  // Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
   Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
   timer.setInterval(1000L, blynkAnotherDevice);  // 每秒钟调用 blynkAnotherDevice 函数

@@ -1,49 +1,22 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
-
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
-
-  Use Table widget to display simple value tables or events
-
-  App project setup:
-    Table widget on V1
-    Button widget (push) on V10
-    Button widget (push) on V11
+  项目说明：table组件高级用法
+  App项目设置:
+  创建table组件，输入管脚设置为V1
+  创建button组件，输出管脚设置为V10，push模式
+  创建button组件，输出管脚设置为V11，push模式
  *************************************************************/
-
-/* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
-
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
-WidgetTable table;
-BLYNK_ATTACH_WIDGET(table, V1);
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
+WidgetTable table;//创建table组件
+BLYNK_ATTACH_WIDGET(table, V1);//将table与V1绑定
 
 int rowIndex = 0;
 
-// Button on V10 adds new items
+//V10的按钮用于增加行
 BLYNK_WRITE(V10) {
   if (param.asInt()) {
     table.addRow(rowIndex, "Test row", millis() / 1000);
@@ -52,7 +25,7 @@ BLYNK_WRITE(V10) {
   }
 }
 
-// Button on V11 clears the table
+// V11的按钮用于清空表格
 BLYNK_WRITE(V11) {
   if (param.asInt()) {
     table.clear();
@@ -62,10 +35,10 @@ BLYNK_WRITE(V11) {
 
 void setup()
 {
-  // Debug console
   Serial.begin(9600);
-
-  Blynk.begin(auth);
+  // Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
 
   // Setup table event callbacks
   table.onOrderChange([](int indexFrom, int indexTo) {

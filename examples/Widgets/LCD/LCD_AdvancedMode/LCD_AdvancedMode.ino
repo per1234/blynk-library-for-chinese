@@ -1,55 +1,29 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
-
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
-
-  Output any data on LCD widget!
-
-  App project setup:
-    LCD widget, switch to ADVANCED mode, select pin V1
+  项目说明：LCD高级模式
+  App项目设置:创建LCD组件，设置为ADVANCED模式，
+  输入管脚为V1
  *************************************************************/
-
-/* Comment this out to disable prints and save space */
 #define BLYNK_PRINT Serial
 
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
 
 WidgetLCD lcd(V1);
 
 void setup()
 {
-  // Debug console
   Serial.begin(9600);
+  // Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
 
-  Blynk.begin(auth);
-
-  lcd.clear(); //Use it to clear the LCD Widget
-  lcd.print(4, 0, "Hello"); // use: (position X: 0-15, position Y: 0-1, "Message you want to print")
+  lcd.clear(); //LCD清屏
+  lcd.print(4, 0, "Hello"); // 使用格式: (X坐标: 0-15, Y坐标: 0-1, "Message you want to print")
   lcd.print(4, 1, "World");
-  // Please use timed events when LCD printintg in void loop to avoid sending too many commands
-  // It will cause a FLOOD Error, and connection will be dropped
+  //如果在主函数中使用该函数，请通过调用事件的方式显示，如果直接显示会导致硬件掉线。
 }
 
 void loop()

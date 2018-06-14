@@ -1,44 +1,38 @@
 /*************************************************************
-项目说明：LCD简单模式
-App项目设置:创建LCD组件，设置为simple模式，
-输入0号设置为V0；输入1号设置为V1；
-message设置
-第一行："/pin0/ seconds"
-第二行："/pin1/ millis"
-
+  项目说明：LCD简单模式
+  App项目设置:创建LCD组件，设置为simple模式，
+  第0行设置为V0；第1行设置为V1；
+  message设置
+  第一行："/pin0/ seconds"
+  第二行："/pin1/ millis"
  *************************************************************/
 #define BLYNK_PRINT Serial
 
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
 
 BlynkTimer timer;
 
-void sendSeconds() {
+void sendSeconds() {//发送秒到V0
   Blynk.virtualWrite(V0, millis() / 1000);
 }
 
-void sendMillis() {
+void sendMillis() {//发送微秒到V1
   Blynk.virtualWrite(V1, millis());
 }
 
 void setup()
 {
-  // Debug console
   Serial.begin(9600);
+  // Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
 
-  Blynk.begin(auth);
-
-  // Setup a function to be called every second
-  timer.setInterval(1000L, sendSeconds);
-  // Setup a function to be called every second
-  timer.setInterval(1000L, sendMillis);
+  timer.setInterval(1000L, sendSeconds);//发送秒
+  timer.setInterval(1000L, sendMillis);//发送微秒
 }
 
 void loop()

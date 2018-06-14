@@ -1,8 +1,8 @@
 /*************************************************************
-项目说明：发送邮件
-App项目设置:创建e-mail组件
-硬件设置：在GPIO2管脚连接一个按钮传感器，按下按钮，就会发送一份邮件到指定邮箱
-注意事项：最高频率5秒1封邮件
+  项目说明：发送邮件
+  App项目设置:创建e-mail组件
+  硬件设置：在GPIO2管脚连接一个按钮传感器，按下按钮，就会发送一份邮件到指定邮箱
+  注意事项：最高频率5秒1封邮件
  *************************************************************/
 
 #define BLYNK_PRINT Serial
@@ -33,12 +33,12 @@ void emailOnButtonPress()
 
 void setup()
 {
- Serial.begin(9600);
-// Blynk.begin(auth, ssid, pass);//官方服务器
-//Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  Serial.begin(9600);
+  // Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
   Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
-//当开发板连接到服务器时，发送一封邮件
-//收件人，邮件主题，邮件内容
+  //当开发板连接到服务器时，发送一封邮件
+  //收件人，邮件主题，邮件内容
   Blynk.email("your_email@mail.com", "Subject", "My Blynk project is online.");
   // 设置按钮管脚为中断输入
   pinMode(2, INPUT_PULLUP);
