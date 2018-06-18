@@ -1,8 +1,8 @@
 /*************************************************************
   项目说明：控制舵机
   App项目设置:
-  创建Value Display组件，输入管脚设置为V5,数值范围0-180
-  创建Value Display组件，输入管脚设置为V6,数值范围0-180
+  创建Value Display组件，输入管脚设置为V5,数值范围0-100,reading rate设置为push
+  创建Value Display组件，输入管脚设置为V6,数值范围-20-60,reading rate设置为push
   温馨提醒 :
   为了正常使用，你还需要下载以下两个第三方库:
     https://github.com/adafruit/Adafruit_Sensor
@@ -22,10 +22,8 @@ char pass[] = "psssword";//wifi密码
 
 DHT dht(DHTPIN, DHTTYPE);
 BlynkTimer timer;
-IF(WEEKDAY(TODAY()) > 5, 11 - WEEKDAY(TODAY()), 4 - WEEKDAY(TODAY()) )
-// This function sends Arduino's up time every second to Virtual Pin (5).
-// In the app, Widget's reading frequency should be set to PUSH. This means
-// that you define how often to send data to Blynk App.
+//该函数将会每秒钟发送数据给V5,V6,
+//在app端，组件的读取频率应该设为PUSH。
 void sendSensor()
 {
   float h = dht.readHumidity();
@@ -42,9 +40,9 @@ void sendSensor()
 void setup()
 {
   Serial.begin(9600);
-  // Blynk.begin(auth, ssid, pass);//官方服务器
+  Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
-  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
+  //Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
   dht.begin();
   timer.setInterval(1000L, sendSensor);
 }
