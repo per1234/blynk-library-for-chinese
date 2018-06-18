@@ -1,41 +1,13 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
-
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
-
-  You can construct and display any strings on a Value Display.
-
-  App project setup:
-    Value Display widget attached to V5
+  项目说明：字符串格式转换
+  App项目设置:  创建Value Display组件，输入管脚设置为V5
  *************************************************************/
-
-/* Comment this out to disable prints and save space */
-#define BLYNK_PRINT Serial
-
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
-
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
+#define BLYNK_PRINT Serial // 开启串口监视
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
 BlynkTimer timer;
 
 // This function sends Arduino's up time every second to Virtual Pin (5).
@@ -43,25 +15,18 @@ BlynkTimer timer;
 // that you define how often to send data to Blynk App.
 void sendTemperature()
 {
-  // Generate random temperature value 10.0 to 30.0 (for example)
-  float t = float(random(100, 300)) / 10;
-
-  // Format: 1 decimal place, add ℃
-  String str = String(t, 1) + "℃";
-
-  // Send it to the server
-  Blynk.virtualWrite(V5, str);
+  float t = float(random(100, 300)) / 10;// 生成10.0到30.0之间的随机数作为温度
+  String str = String(t, 1) + "℃";  // 格式转换:保留一位小数，并添加℃
+  Blynk.virtualWrite(V5, str);// 将信息发给V5管脚
 }
 
 void setup()
 {
-  // Debug console
   Serial.begin(9600);
-
-  Blynk.begin(auth);
-
-  // Setup a function to be called every second
-  timer.setInterval(1000L, sendTemperature);
+ Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  //Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
+  timer.setInterval(1000L, sendTemperature);//每秒钟调用sendTemperature函数
 }
 
 void loop()

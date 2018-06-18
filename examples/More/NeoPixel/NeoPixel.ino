@@ -1,46 +1,18 @@
 /*************************************************************
-  Download latest Blynk library here:
-    https://github.com/blynkkk/blynk-library/releases/latest
-
-  Blynk is a platform with iOS and Android apps to control
-  Arduino, Raspberry Pi and the likes over the Internet.
-  You can easily build graphic interfaces for all your
-  projects by simply dragging and dropping widgets.
-
-    Downloads, docs, tutorials: http://www.blynk.cc
-    Sketch generator:           http://examples.blynk.cc
-    Blynk community:            http://community.blynk.cc
-    Follow us:                  http://www.fb.com/blynkapp
-                                http://twitter.com/blynk_app
-
-  Blynk library is licensed under MIT license
-  This example code is in public domain.
-
- *************************************************************
-
-  Control a color gradient on NeoPixel strip using a slider!
-
-  For this example you need NeoPixel library:
-    https://github.com/adafruit/Adafruit_NeoPixel
-
-  App project setup:
-    Slider widget (0...500) on V1
+  项目说明：彩灯控制
+  App项目设置:  创建slider组件，管脚设置为V1，范围设置0...500
+  温馨提示：该项目需要下载以下第三方库
+     https://github.com/adafruit/Adafruit_NeoPixel
  *************************************************************/
-
-/* Comment this out to disable prints and save space */
-#define BLYNK_PRINT Serial
-
-
-#include <SPI.h>
-#include <Ethernet.h>
-#include <BlynkSimpleEthernet.h>
+#define BLYNK_PRINT Serial // 开启串口监视
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
 #include <Adafruit_NeoPixel.h>
+char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char ssid[] = "ssid";//wifi名称
+char pass[] = "psssword";//wifi密码
 
-// You should get Auth Token in the Blynk App.
-// Go to the Project Settings (nut icon).
-char auth[] = "YourAuthToken";
-
-#define PIN 8
+#define PIN 12
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -64,19 +36,19 @@ BLYNK_WRITE(V1)
   for (int i = 0; i < strip.numPixels(); i++)
   {
     strip.setPixelColor(i, Wheel(shift & 255));
-    // OR: strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + shift) & 255));
+    // 或者: strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + shift) & 255));
   }
   strip.show();
 }
 
 void setup()
 {
-  // Debug console
+
   Serial.begin(9600);
-
-  Blynk.begin(auth);
-
-  strip.begin();
+  Blynk.begin(auth, ssid, pass);//官方服务器
+  //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
+  //Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
+   strip.begin();
   strip.show();
 }
 
