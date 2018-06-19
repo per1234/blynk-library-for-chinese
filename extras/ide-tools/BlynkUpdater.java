@@ -43,7 +43,7 @@ import static processing.app.I18n.tr;
 
 public class BlynkUpdater implements Tool {
   private Editor editor;
-  final String lib_url = "https://raw.githubusercontent.com/blynkkk/blynk-library/master/library.properties";
+  final String lib_url = "https://raw.githubusercontent.com/hznupeter/blynk-library-for-chinese/master/library.properties";
 
   public void init(Editor editor) {
     this.editor = editor;
@@ -181,7 +181,7 @@ public class BlynkUpdater implements Tool {
         }
 
         final String zip_fn = "Blynk_Release_v" + last_version;
-        final String zip_url = "https://github.com/blynkkk/blynk-library/releases/download/v" + last_version + "/" + zip_fn + ".zip";
+        final String zip_url = "https://github.com/hznupeter/blynk-library-for-chinese/releases/download/v" + last_version + "/" + last_version + ".zip";
 
         ByteArrayOutputStream zip_os = downloadFile(zip_url);
         File tmpFolder = null;
@@ -189,7 +189,7 @@ public class BlynkUpdater implements Tool {
           tmpFolder = FileUtils.createTempFolder();
 
           {
-            File tmpFile = new File(tmpFolder, zip_fn + ".zip");
+            File tmpFile = new File(tmpFolder, last_version + ".zip");
             try(OutputStream outputStream = new FileOutputStream(tmpFile)) {
               zip_os.writeTo(outputStream);
             }
@@ -201,7 +201,7 @@ public class BlynkUpdater implements Tool {
             zipDeflater = null;
           }
 
-          File tmpUnpackedFolder = new File(tmpFolder, zip_fn);
+          File tmpUnpackedFolder = new File(tmpFolder, last_version);
 
           // Update libs
           File tgtLibsFolder = new File(sketchbook_path, "libraries");
@@ -229,7 +229,7 @@ public class BlynkUpdater implements Tool {
                 options,
                 options[0]);
             if (result == JOptionPane.YES_OPTION) {
-              Base.openURL(tr("https://github.com/blynkkk/blynk-library/releases/latest"));
+              Base.openURL(tr("https://github.com/hznupeter/blynk-library-for-chinese/releases/latest"));
             }
           }
 
