@@ -1,7 +1,7 @@
 {
   "name": "Blynk For Chinese",
-  "version": "0.5.5",
-  "description": "Build a smartphone app for your project in minutes. Blynk allows creating IoT solutions easily. It supports  WiFi, BLE, Bluetooth, Ethernet, GSM, USB, Serial. Works with many boards like ESP8266, ESP32, Arduino UNO, Nano, Due, Mega, Zero, MKR100, Yun, Raspberry Pi, Particle, Energia, ARM mbed, Intel Edison/Galileo/Joule, BBC micro:bit, DFRobot, RedBearLab, Microduino, LinkIt ONE ...",
+  "version": "0.5.6",
+  "description": "利用Blynk平台，可以快速搭建物联网应用。",
   "keywords": "blynk,sensors, control, device, smartphone, mobile, app, web, cloud, communication, protocol, iot, m2m, wifi, ble, bluetooth, ethernet, usb, serial, gsm, gprs, 3g, data, esp8266, http",
   "authors":
   {
