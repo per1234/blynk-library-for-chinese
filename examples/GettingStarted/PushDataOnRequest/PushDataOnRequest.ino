@@ -4,11 +4,11 @@
   创建value display组件，设置管脚为V5，
   READING RATE (读取频率)设置为任何值，如1秒。
 
-温馨提示：
-该例子与PushData的区别：PushData是每隔一定时间主动发送数据给app，
-这个间隔时间是程序里写好的；
-而PushDdataOnRequest是不会主动发送数据给app的，
-只有当app询问的时候才会发送数据，而这个询问的频率是由app端设置的。
+  温馨提示：
+  该例子与PushData的区别：PushData是每隔一定时间主动发送数据给app，
+  这个间隔时间是程序里写好的；
+  而PushDdataOnRequest是不会主动发送数据给app的，
+  只有当app询问的时候才会发送数据，而这个询问的频率是由app端设置的。
  *************************************************************/
 #define BLYNK_PRINT Serial // 开启串口监视
 #include <ESP8266WiFi.h>
@@ -29,7 +29,7 @@ BLYNK_READ(PIN_UPTIME)
 void setup()
 {
   Serial.begin(9600);
-   Blynk.begin(auth, ssid, pass);//官方服务器
+  Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
   //Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
 }

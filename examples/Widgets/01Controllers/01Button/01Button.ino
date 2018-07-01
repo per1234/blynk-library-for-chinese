@@ -1,24 +1,14 @@
 /*************************************************************
-  项目说明：从app获取数据
+  项目说明：用按钮控制LED
   App项目设置:
-  创建Slider组件，输出管脚设置为V1
- *************************************************************/
+  创建Button组件，输出管脚设置为GPIO2,模式设为switch
+  *************************************************************/
 #define BLYNK_PRINT Serial // 开启串口监视
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
-char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+char auth[] = "c3102448027d494ca48b27d0a732f245";//授权码
 char ssid[] = "ssid";//wifi名称
 char pass[] = "psssword";//wifi密码
-
-BLYNK_WRITE(V1)
-{
-  int pinValue = param.asInt(); // 从虚拟管脚V1获取整数
-  // 或者用以下方式
-  // String i = param.asStr();
-  // double d = param.asDouble();
-  Serial.print("V1 Slider value is: ");
-  Serial.println(pinValue);
-}
 
 void setup()
 {
@@ -32,4 +22,3 @@ void loop()
 {
   Blynk.run();
 }
-

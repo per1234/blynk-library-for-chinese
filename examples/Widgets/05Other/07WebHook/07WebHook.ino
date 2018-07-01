@@ -1,7 +1,7 @@
 /*************************************************************
   项目说明：使用webHook获取数据
   App项目设置:创建WebHook组件，设置V0管脚
-method: GET, url: /pin/
+  method: GET, url: /pin/
 *************************************************************/
 #define BLYNK_PRINT Serial
 #include <ESP8266WiFi.h>
@@ -18,7 +18,7 @@ BLYNK_WRITE(V0)
 
 void setup()
 {
-    Serial.begin(9600);
+  Serial.begin(9600);
 
   // Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式

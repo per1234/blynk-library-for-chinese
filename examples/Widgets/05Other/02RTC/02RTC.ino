@@ -2,20 +2,20 @@
   项目说明：RTC
   App项目设置:创建RTC组件，
   创建Value Display组件，管脚设为V1,
-创建Value Display组件，管脚设为V2,
-温馨提示：
-本项目需要额外库
- https://github.com/PaulStoffregen/Time
- 本项目基于
- https://github.com/PaulStoffregen/Time/blob/master/examples/TimeSerial/TimeSerial.ino
+  创建Value Display组件，管脚设为V2,
+  温馨提示：
+  本项目需要额外库
+  https://github.com/PaulStoffregen/Time
+  本项目基于
+  https://github.com/PaulStoffregen/Time/blob/master/examples/TimeSerial/TimeSerial.ino
 
  *************************************************************/
- #define BLYNK_PRINT Serial
+#define BLYNK_PRINT Serial
 
- #include <ESP8266WiFi.h>
- #include <BlynkSimpleEsp8266.h>
- #include <TimeLib.h>
- #include <WidgetRTC.h>
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+#include <TimeLib.h>
+#include <WidgetRTC.h>
 
 char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
 char ssid[] = "ssid";//wifi名称
@@ -26,15 +26,15 @@ WidgetRTC rtc;//创建rtc组件
 
 void clockDisplay()//显示时间
 {
- //你可以使用hour(), minute(), ...
-//更多细节，请参考Time库 中的例子
-String currentTime = String(hour()) + ":" + minute() + ":" + second();
-String currentDate = String(day()) + " " + month() + " " + year();
-Serial.print("Current time: ");
-Serial.print(currentTime);
-Serial.print(" ");
-Serial.print(currentDate);
-Serial.println();
+  //你可以使用hour(), minute(), ...
+  //更多细节，请参考Time库 中的例子
+  String currentTime = String(hour()) + ":" + minute() + ":" + second();
+  String currentDate = String(day()) + " " + month() + " " + year();
+  Serial.print("Current time: ");
+  Serial.print(currentTime);
+  Serial.print(" ");
+  Serial.print(currentDate);
+  Serial.println();
   Blynk.virtualWrite(V1, currentTime);//向App发送时间
   Blynk.virtualWrite(V2, currentDate);//向App发送日期
 }
@@ -45,7 +45,7 @@ BLYNK_CONNECTED() {
 
 void setup()
 {
-  
+
   Serial.begin(9600);
 
   //Blynk.begin(auth, ssid, pass);//官方服务器

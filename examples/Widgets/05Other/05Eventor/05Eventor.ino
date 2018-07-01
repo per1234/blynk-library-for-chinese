@@ -4,10 +4,6 @@
   硬件设置：
   注意事项：
 
-*************************************************************/
-
-/*************************************************************
-
   You can use predefined rules on application side.
   Project setup in the Blynk app:
     Eventor widget with next rules:

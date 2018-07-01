@@ -1,8 +1,8 @@
 /*************************************************************
   项目说明：定时器
   App项目设置:创建Timer组件，设置管脚为V5
-该项目将在指定的时间触发IO口高低电平的变化。
-Timer组件可以控制ADC和GPIO口。
+  该项目将在指定的时间触发IO口高低电平的变化。
+  Timer组件可以控制ADC和GPIO口。
 *************************************************************/
 #define BLYNK_PRINT Serial
 #include <ESP8266WiFi.h>
@@ -23,7 +23,7 @@ BLYNK_WRITE(V5)
 
 void setup()
 {
- Serial.begin(9600);
+  Serial.begin(9600);
   // Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
   Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
