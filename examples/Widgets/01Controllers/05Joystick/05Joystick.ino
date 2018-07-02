@@ -1,7 +1,13 @@
 /*************************************************************
   项目说明：摇杆
-  App项目设置:
-  创建joystick组件，设置管脚为V1,模式为merge，在merge模式下，x和y会被放在1条消息中合并发送
+  APP端组件设置说明：
+  - 设置Joystick名称
+  - OUTPUT:SPLIT(分离模式);MERGE(合并模式)。
+  选择分离模式时，将使用两个管脚来传输摇杆的x/y数值；
+  选择合并模式时，将使用一个虚拟管脚来传输摇杆的x/y数值；
+  - AUTORETURN:摇杆自动回位
+  - ROTATE ON TILE:手机横屏时自动调整，开启该功能时，方便手机横过来操作
+  - WRITE INTERVAL:写入时间间隔，为防止大量数据写入而设置的写入时间间隔
  *************************************************************/
 #define BLYNK_PRINT Serial
 
@@ -11,7 +17,7 @@ char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
 char ssid[] = "ssid";//wifi名称
 char pass[] = "psssword";//wifi密码
 
-BLYNK_WRITE(V1) {
+BLYNK_WRITE(V1) {//设置joystick组件管脚为V1,模式为merge
   int x = param[0].asInt();//joystick的x值
   int y = param[1].asInt();//joystick的y值
   Serial.print("X = ");

@@ -1,11 +1,15 @@
 /**************************************************************
   项目说明：斑马取色控制RGB彩灯
+APP端组件设置说明：
+  - 设置zeRGBa名称
+  - OUTPUT:SPLIT(分离模式);MERGE(合并模式)。
+  选择分离模式时，将使用三个管脚来传输R/G/B数值；
+  选择合并模式时，将使用一个虚拟管脚来传输的R/G/B数值；
+  - SEND ON RELEASE:松开发送
+
   温馨提示：该项目需要下载以下第三方库
   https://github.com/adafruit/Adafruit_NeoPixel
-  APP设置：
-  创建zeRGBa组件，管脚V1，输出模式设为Merge（合并）
-  创建Button组件，管脚V0，模式设置为PUSH。
- *************************************************************/
+*************************************************************/
 #define BLYNK_PRINT Serial // 开启串口监视
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
@@ -16,7 +20,7 @@ char pass[] = "psssword";//wifi密码
 #define PIN 12
 int R, G, B;
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(4, PIN, NEO_GRB + NEO_KHZ800);
-BLYNK_WRITE(V0)
+BLYNK_WRITE(V0)//创建Button组件，管脚V0，模式设置为PUSH。
 { //开关
   int state = param.asInt();
   if (state)
@@ -24,7 +28,7 @@ BLYNK_WRITE(V0)
   else
     strip.clear();
 }
-BLYNK_WRITE(V1)
+BLYNK_WRITE(V1)//zeRGBa组件，管脚V1，输出模式设为Merge（合并）
 { //斑马取色
   R = param[0].asInt();
   G = param[1].asInt();
