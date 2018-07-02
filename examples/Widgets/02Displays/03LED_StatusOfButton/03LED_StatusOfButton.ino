@@ -1,7 +1,9 @@
 /*************************************************************
 项目说明：按钮状态指示灯
-App项目设置:创建LED组件，设置管脚为V3
- *************************************************************/
+  APP端组件设置说明：
+  - 设置LED名称,设置LED颜色
+  - INPUT管脚:设置虚拟管脚
+*************************************************************/
 #define BLYNK_PRINT Serial
 
 #include <ESP8266WiFi.h>
@@ -12,7 +14,7 @@ char pass[] = "psssword";//wifi密码
 
 const int btnPin = 12;// 按钮连接管脚
 
-WidgetLED led3(V3);//指示灯管脚
+WidgetLED led3(V3);//在V3创建一个LED组件
 
 BlynkTimer timer;
 
@@ -35,9 +37,9 @@ void buttonLedWidget()
 void setup()
 {
   Serial.begin(9600);
-//Blynk.begin(auth, ssid, pass);//官方服务器
+Blynk.begin(auth, ssid, pass);//官方服务器
 //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
-  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
+//Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
   pinMode(btnPin, INPUT_PULLUP);//btnPin管脚设为上升中断模式
   timer.setInterval(500L, buttonLedWidget);//每隔500毫秒执行buttonLedWidget
 }
@@ -47,4 +49,3 @@ void loop()
   Blynk.run();
   timer.run();
 }
-
