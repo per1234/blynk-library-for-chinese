@@ -1,5 +1,6 @@
 /*************************************************************
   项目说明：按钮状态指示灯
+  
   APP端组件设置说明：
   - 设置LED名称,设置LED颜色
   - INPUT管脚:设置虚拟管脚
@@ -22,7 +23,6 @@ boolean btnState = false;// 用LED表示按钮是否按下
 
 void buttonLedWidget()
 {
-
   boolean isPressed = (digitalRead(btnPin) == LOW);//读取按钮是否按下，注意，此处是针对 低电平 有效的按钮
   if (isPressed != btnState) {//如果当前按钮状态与之前不一样
     if (isPressed) {//如果当前是按下的
