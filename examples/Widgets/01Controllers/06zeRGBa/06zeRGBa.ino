@@ -1,5 +1,9 @@
 /**************************************************************
-  项目说明：斑马取色控制RGB彩灯
+  项目说明：斑马取色模块控制RGB彩灯
+
+  App项目设置:
+  创建zeRGBa组件，输出管脚设置为V0，模式设置为MERGE
+
   APP端组件设置说明：
   - 设置zeRGBa名称
   - OUTPUT:SPLIT(分离模式);MERGE(合并模式)。
@@ -9,6 +13,13 @@
 
   温馨提示：该项目需要下载以下第三方库
   https://github.com/adafruit/Adafruit_NeoPixel
+
+   硬件连接：
+  ws2812彩灯模块连接到GPIO12
+
+  blynk_for_chinese 库地址：https://github.com/hznupeter/blynk-library-for-chinese
+
+  Blynk物联网学习资料：https://gitee.com/hznupeter/Blynk_IOT/wikis
 *************************************************************/
 #define BLYNK_PRINT Serial // 开启串口监视
 #include <ESP8266WiFi.h>

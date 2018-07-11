@@ -1,10 +1,21 @@
 /**************************************************************
-  项目说明：用slider控制GPIO2的LED亮度
-   APP端组件设置说明：
+  项目说明：用Slider控制LED亮度
+
+   App项目设置:
+  创建Slider组件，输出管脚设置为GPIO2
+
+   slider组件设置说明：
   - 设置slider名称,如调光台灯
   - OUTPUT管脚:可以设置为数字管脚,模拟管脚或者虚拟管脚,最小值设为0,最大值设为1023
   - SEND ON RELEASE:松开发送
   - SHOW VALUE:显示数值
+
+  硬件连接：
+  LED连接到GPIO2
+
+  blynk_for_chinese 库地址：https://github.com/hznupeter/blynk-library-for-chinese
+
+  Blynk物联网学习资料：https://gitee.com/hznupeter/Blynk_IOT/wikis
 *************************************************************/
 #define BLYNK_PRINT Serial // 开启串口监视
 #include <ESP8266WiFi.h>
