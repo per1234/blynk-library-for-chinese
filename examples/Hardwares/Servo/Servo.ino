@@ -13,7 +13,7 @@ char ssid[] = "ssid";//wifi名称
 char pass[] = "psssword";//wifi密码
 Servo servo;
 
-BLYNK_WRITE(V3)
+BLYNK_WRITE(V0)//通过虚拟管脚V0写入角度
 {
   servo.write(param.asInt());
 }
@@ -24,7 +24,7 @@ void setup()
   Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
   //Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
-  servo.attach(9);
+  servo.attach(12);//舵机连接管脚
 }
 
 void loop()
