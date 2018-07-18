@@ -1,7 +1,12 @@
 /*************************************************************
   项目说明：控制舵机
+  硬件连接：舵机连接在GPIO12管脚
   App项目设置:
   创建slider组件，输出管脚设置为V3,数值范围0-180
+
+  blynk_for_chinese 库地址：https://github.com/hznupeter/blynk-library-for-chinese
+
+  Blynk物联网学习资料：https://gitee.com/hznupeter/Blynk_IOT/wikis
  *************************************************************/
 
 #define BLYNK_PRINT Serial // 开启串口监视

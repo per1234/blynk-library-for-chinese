@@ -1,13 +1,14 @@
 /*************************************************************
   项目说明：发送邮件
   App项目设置:创建e-mail组件
-  硬件设置：在GPIO2管脚连接一个按钮传感器，按下按钮，就会发送一份邮件到指定邮箱
+  硬件连接：按钮传感器连接在GPIO2管脚
   注意事项：最高频率5秒1封邮件
+
  *************************************************************/
 
 #define BLYNK_PRINT Serial
 
-//#define BLYNK_MAX_SENDBYTES 128// 该值越大，能发送的邮件长度越长
+#define BLYNK_MAX_SENDBYTES 128// 该值越大，能发送的邮件长度越长
 
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
@@ -17,13 +18,9 @@ char pass[] = "psssword";//wifi密码
 
 void emailOnButtonPress()
 {
-  // Let's send an e-mail when you press the button
-  // connected to digital pin 2 on your Arduino
-
-  int isButtonPressed = !digitalRead(2); // Invert state, since button is "Active LOW"
-
+  int isButtonPressed = !digitalRead(2); 
   if (isButtonPressed) // 你可以在此设置任何触发邮件发送的条件
-  {
+  {//按钮按下时，发送邮件
     Serial.println("Button is pressed."); // 串口输出
     Blynk.email("your_email@mail.com", "Subject: Button Logger", "You just pushed the button...");
     // 如果只是想在手机app上显示，可以用以下格式
@@ -34,9 +31,9 @@ void emailOnButtonPress()
 void setup()
 {
   Serial.begin(9600);
-  // Blynk.begin(auth, ssid, pass);//官方服务器
+  Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
-  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
+  //Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
   //当开发板连接到服务器时，发送一封邮件
   //收件人，邮件主题，邮件内容
   Blynk.email("your_email@mail.com", "Subject", "My Blynk project is online.");

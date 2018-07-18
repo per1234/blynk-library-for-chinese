@@ -35,9 +35,9 @@ BLYNK_WRITE(V5)
 void setup()
 {
   Serial.begin(9600);
-  //Blynk.begin(auth, ssid, pass);//官方服务器
+  Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
-  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
+  //Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
 }
 
 void loop()

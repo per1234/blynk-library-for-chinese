@@ -1,11 +1,16 @@
 /**************************************************************
 项目说明：OLED显示
 手机端发送的文字显示在OLED屏幕上
+硬件连接：OLED 连接在IIC接口
 温馨提示：该项目需要下载以下第三方库
 https://github.com/olikraus/u8g2
 更多示例，请参考https://github.com/olikraus/u8g2/wiki/u8g2reference
 app端设置：
 创建Terminal组件，输入管脚V1，开启INPUT LINE
+
+blynk_for_chinese 库地址：https://github.com/hznupeter/blynk-library-for-chinese
+
+  Blynk物联网学习资料：https://gitee.com/hznupeter/Blynk_IOT/wikis
 *************************************************************/
 #define BLYNK_PRINT Serial // 开启串口监视
 #include <ESP8266WiFi.h>
@@ -36,7 +41,7 @@ BLYNK_WRITE(V1)
   u8g2.setFontDirection(0);//设置文字方向
   u8g2.clearBuffer();
   u8g2.setCursor(0, 15);//设置文字显示位置
-  u8g2.print(param.asStr());//将接收到的文字
+  u8g2.print(param.asStr());//将接收到的文字显示出来
   u8g2.sendBuffer();
   terminal.flush();
 }

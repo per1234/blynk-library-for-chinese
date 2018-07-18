@@ -30,16 +30,15 @@ void sendFlagToServer() {
 }
 
 BLYNK_WRITE(V1) {
-  //here you'll get 0 or 255
   int ledValue = param.asInt();
 }
 
 void setup()
 {
   Serial.begin(9600);
-  // Blynk.begin(auth, ssid, pass);//官方服务器
+  Blynk.begin(auth, ssid, pass);//官方服务器
   //Blynk.begin(auth, ssid, pass, "blynk-cloud.com", 8080);//自建服务器域名模式
-  Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
+  //Blynk.begin(auth, ssid, pass, IPAddress(192, 168, 1, 158), 8080);//自建服务器ip模式
   timer.setInterval(1000L, sendFlagToServer);//每秒执行一次
 }
 

@@ -2,11 +2,15 @@
   项目说明：超声波测距
   App项目设置:
   创建Value display组件，设置管脚为V5
+  硬件连接：超声波传感器连接在IIC接口，trig:4;echo:5
+  blynk_for_chinese 库地址：https://github.com/hznupeter/blynk-library-for-chinese
+
+  Blynk物联网学习资料：https://gitee.com/hznupeter/Blynk_IOT/wikis
   *************************************************************/
-#define BLYNK_PRINT Serial // 开启串口监视
-#include <ESP8266WiFi.h>
-#include <BlynkSimpleEsp8266.h>
-#include <Ultrasonic.h>
+  #define BLYNK_PRINT Serial // 开启串口监视
+  #include <ESP8266WiFi.h>
+  #include <BlynkSimpleEsp8266.h>
+  #include <Ultrasonic.h>
 char auth[] = "c3102448027d494ca48b27d0a732f245";//授权码
 char ssid[] = "ssid";//wifi名称
 char pass[] = "psssword";//wifi密码

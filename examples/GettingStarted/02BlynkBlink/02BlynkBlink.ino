@@ -1,7 +1,14 @@
 /*************************************************************
   项目说明：控制IO电平
   App项目设置:
-  创建Button组件，输出管脚设置为GPIO2,模式设为switch
+  创建Button组件，输出管脚设置为GPIO2,模式设为Switch
+
+  硬件连接：
+  闪灯模块连接在GPIO2管脚
+  
+  blynk_for_chinese 库地址：https://github.com/hznupeter/blynk-library-for-chinese
+
+  Blynk物联网学习资料：https://gitee.com/hznupeter/Blynk_IOT/wikis
   *************************************************************/
   #define BLYNK_PRINT Serial // 开启串口监视
   #include <ESP8266WiFi.h>

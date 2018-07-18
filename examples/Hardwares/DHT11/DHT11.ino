@@ -1,12 +1,13 @@
 /*************************************************************
-  项目说明：读取DHT11数值
+  项目说明：DHT11测温湿度
   App项目设置:
   创建Value Display组件，输入管脚设置为V5,数值范围0-100,reading rate设置为push
   创建Value Display组件，输入管脚设置为V6,数值范围-20-60,reading rate设置为push
-  温馨提醒 :
-  为了正常使用，你还需要下载以下两个第三方库:
-    https://github.com/adafruit/Adafruit_Sensor
-    https://github.com/adafruit/DHT-sensor-library
+
+  硬件连接：DHT11连接在GPIO2管脚
+  blynk_for_chinese 库地址：https://github.com/hznupeter/blynk-library-for-chinese
+
+  Blynk物联网学习资料：https://gitee.com/hznupeter/Blynk_IOT/wikis
  *************************************************************/
 #define BLYNK_PRINT Serial // 开启串口监视
 #include <ESP8266WiFi.h>
