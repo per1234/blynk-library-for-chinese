@@ -1,6 +1,6 @@
 {
   "name": "Blynk For Chinese",
-  "version": "0.5.7",
+  "version": "0.5.8",
   "description": "利用Blynk平台，可以快速搭建物联网应用。",
   "keywords": "blynk,sensors, control, device, smartphone, mobile, app, web, cloud, communication, protocol, iot, m2m, wifi, ble, bluetooth, ethernet, usb, serial, gsm, gprs, 3g, data, esp8266, http",
   "authors":
