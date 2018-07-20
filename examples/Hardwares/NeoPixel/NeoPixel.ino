@@ -8,39 +8,39 @@
 
   Blynk物联网学习资料：https://gitee.com/hznupeter/Blynk_IOT/wikis
   *************************************************************/
-  #define BLYNK_PRINT Serial // 开启串口监视
-  #include <ESP8266WiFi.h>
-  #include <BlynkSimpleEsp8266.h>
-  #include <Adafruit_NeoPixel.h>
-char auth[] = "2a365b624c0f4ea891256d4a66d428f7";//授权码
+#define BLYNK_PRINT Serial // 开启串口监视
+#include <ESP8266WiFi.h>
+#include <BlynkSimpleEsp8266.h>
+#include <Adafruit_NeoPixel.h>
+char auth[] = "32586e6ccc0b432793616603a41a3b29";//授权码
 char ssid[] = "ssid";//wifi名称
-char pass[] = "psssword";//wifi密码
-
+char pass[] = "pass";//wifi密码
+#define LED_NUMS 4
 #define PIN 12
 
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(4, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(LED_NUMS, PIN, NEO_GRB + NEO_KHZ800);
 
 // Input a value 0 to 255 to get a color value.
 // The colours are a transition r - g - b - back to r.
 uint32_t Wheel(byte WheelPos) {
   if (WheelPos < 85) {
     return strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
-    } else if (WheelPos < 170) {
-      WheelPos -= 85;
-      return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
-      } else {
-        WheelPos -= 170;
-        return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
-      }
-    }
+  } else if (WheelPos < 170) {
+    WheelPos -= 85;
+    return strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
+  } else {
+    WheelPos -= 170;
+    return strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);
+  }
+}
 
-    BLYNK_WRITE(V1)
-    {
-      int shift = param.asInt();
-      for (int i = 0; i < strip.numPixels(); i++)
-      {
-        strip.setPixelColor(i, Wheel(shift & 255));
-    // 或者: strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + shift) & 255));
+BLYNK_WRITE(V1)
+{
+  int shift = param.asInt();
+  for (int i = 0; i < strip.numPixels(); i++)
+  {
+    //strip.setPixelColor(i, Wheel(shift & 255));
+    strip.setPixelColor(i, Wheel(((i * 256 / strip.numPixels()) + shift) & 255));
   }
   strip.show();
 }
